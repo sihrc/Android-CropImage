@@ -1,0 +1,29 @@
+Index: android-cropimage/res/layout/cropimage.xml
+===================================================================
+--- android-cropimage.orig/res/layout/cropimage.xml	2011-07-20 21:38:05.724325996 +0200
++++ android-cropimage/res/layout/cropimage.xml	2011-07-20 21:38:22.082758767 +0200
+@@ -15,18 +15,18 @@
+ -->
+ 
+ <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent">
++        android:layout_width="fill_parent"
++        android:layout_height="fill_parent">
+ 
+     <RelativeLayout
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
++            android:layout_width="fill_parent"
++            android:layout_height="fill_parent"
+             android:orientation="horizontal">
+ 
+         <view class="com.android.camera.CropImageView" android:id="@+id/image"
+                 android:background="#55000000"
+-                android:layout_width="match_parent"
+-                android:layout_height="match_parent"
++                android:layout_width="fill_parent"
++                android:layout_height="fill_parent"
+                 android:layout_x="0dip"
+                 android:layout_y="0dip"
+         />
