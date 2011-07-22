@@ -16,10 +16,11 @@
 
 package com.android.camera;
 
-import com.android.gallery.R;
-
-import com.android.camera.gallery.IImage;
-import com.android.camera.gallery.IImageList;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 import android.app.WallpaperManager;
 import android.content.ContentResolver;
@@ -47,11 +48,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
+import com.android.camera.gallery.IImage;
+import com.android.camera.gallery.IImageList;
+import com.android.gallery.R;
 
 /**
  * The activity can crop specific region of interest from an image.
@@ -126,6 +125,20 @@ public class CropImage extends MonitoredActivity {
             mDoFaceDetection = extras.containsKey("noFaceDetection")
                     ? !extras.getBoolean("noFaceDetection")
                     : true;
+        }
+
+        if (mBitmap == null) {
+            Uri target = intent.getData();
+            mAllImages = ImageManager.makeImageList(mContentResolver, target,
+                    ImageManager.SORT_ASCENDING);
+            mImage = mAllImages.getImageForUri(target);
+            if (mImage != null) {
+                // Don't read in really large bitmaps. Use the (big) thumbnail
+                // instead.
+                // TODO when saving the resulting bitmap use the
+                // decode/crop/encode api so we don't lose any resolution.
+                mBitmap = mImage.thumbBitmap(IImage.ROTATE_AS_NEEDED);
+            }
         }
 
         if (mBitmap == null) {
@@ -327,6 +340,49 @@ public class CropImage extends MonitoredActivity {
             } catch (IOException e) {
                 Log.e(TAG, "Failed to set wallpaper.", e);
                 setResult(RESULT_CANCELED);
+            }
+        } else {
+            Bundle extras = new Bundle();
+            extras.putString("rect", mCrop.getCropRect().toString());
+
+            File oldPath = new File(mImage.getDataPath());
+            File directory = new File(oldPath.getParent());
+
+            int x = 0;
+            String fileName = oldPath.getName();
+            fileName = fileName.substring(0, fileName.lastIndexOf("."));
+
+            // Try file-1.jpg, file-2.jpg, ... until we find a filename which
+            // does not exist yet.
+            while (true) {
+                x += 1;
+                String candidate = directory.toString()
+                        + "/" + fileName + "-" + x + ".jpg";
+                boolean exists = (new File(candidate)).exists();
+                if (!exists) {
+                    break;
+                }
+            }
+
+            try {
+                int[] degree = new int[1];
+                Uri newUri = ImageManager.addImage(
+                        mContentResolver,
+                        mImage.getTitle(),
+                        mImage.getDateTaken(),
+                        null,    // TODO this null is going to cause us to lose
+                                 // the location (gps).
+                        directory.toString(), fileName + "-" + x + ".jpg",
+                        croppedImage, null,
+                        degree);
+
+                setResult(RESULT_OK, new Intent()
+                        .setAction(newUri.toString())
+                        .putExtras(extras));
+            } catch (Exception ex) {
+                // basically ignore this or put up
+                // some ui saying we failed
+                Log.e(TAG, "store image fail, continue anyway", ex);
             }
         }
 
