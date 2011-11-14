@@ -3,6 +3,7 @@
 .project
 Thumbs.db
 desktop.ini
+local.properties
 
 .pc/
 .settings/
