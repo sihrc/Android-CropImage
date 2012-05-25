@@ -21,8 +21,7 @@ To work-around this bug you have to disable hardware acceleration for the
 
     <activity
         android:name="com.android.camera.CropImage"
-        android:hardwareAccelerated="false"
-        android:screenOrientation="portrait"/>
+        android:hardwareAccelerated="false"/>
 
 
 
