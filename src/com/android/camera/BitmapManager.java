@@ -125,8 +125,8 @@ public class BitmapManager {
         try {
             synchronized (status) {
                 while (status.mThumbRequesting) {
-                    Images.Thumbnails.cancelThumbnailRequest(cr, t.getId());
-                    Video.Thumbnails.cancelThumbnailRequest(cr, t.getId());
+                    Images.Thumbnails.cancelThumbnailRequest(cr, -1, t.getId());
+                    Video.Thumbnails.cancelThumbnailRequest(cr, -1, t.getId());
                     status.wait(200);
                 }
             }
@@ -150,10 +150,10 @@ public class BitmapManager {
                 status.mThumbRequesting = true;
             }
             if (isVideo) {
-                return Video.Thumbnails.getThumbnail(cr, t.getId(),
+                return Video.Thumbnails.getThumbnail(cr, origId, t.getId(),
                         kind, null);
             } else {
-                return Images.Thumbnails.getThumbnail(cr, t.getId(),
+                return Images.Thumbnails.getThumbnail(cr, origId, t.getId(),
                         kind, null);
             }
         } finally {
