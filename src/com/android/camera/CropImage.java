@@ -16,10 +16,11 @@
 
 package com.android.camera;
 
-import com.android.gallery.R;
-
-import com.android.camera.gallery.IImage;
-import com.android.camera.gallery.IImageList;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 import android.app.WallpaperManager;
 import android.content.ContentResolver;
@@ -47,11 +48,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
+import com.android.camera.gallery.IImage;
+import com.android.camera.gallery.IImageList;
+import com.android.gallery.R;
 
 /**
  * The activity can crop specific region of interest from an image.
