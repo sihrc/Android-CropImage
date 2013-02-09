@@ -2,7 +2,7 @@ Android CropImage
 =================
 
 The `CropImage` activity extracted from `Gallery.apk`. Compatible with Android
-2.3 onwards.
+2.3 and later versions.
 
 
 
@@ -12,7 +12,7 @@ Intent-based API
 
 The `CropImage` activity is controlled by an Intent-based API. Please use the
 wrapper class
-(com.android.camera.CropImageIntentBuilder)[https://github.com/lvillani/android-cropimage/blob/develop/src/com/android/camera/CropImageIntentBuilder.java]
+[com.android.camera.CropImageIntentBuilder](https://github.com/lvillani/android-cropimage/blob/develop/src/com/android/camera/CropImageIntentBuilder.java)
 for a type-safe interface.
 
 
