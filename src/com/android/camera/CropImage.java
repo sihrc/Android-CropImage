@@ -96,6 +96,8 @@ public class CropImage extends MonitoredActivity {
 
         mImageView = (CropImageView) findViewById(R.id.image);
 
+        MenuHelper.showStorageToast(this);
+
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
@@ -639,7 +641,7 @@ class CropImageView extends ImageViewTouchBase {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        CropImage cropImage = (CropImage) getContext();
+        CropImage cropImage = (CropImage) mContext;
         if (cropImage.mSaving) {
             return false;
         }
@@ -679,7 +681,7 @@ class CropImageView extends ImageViewTouchBase {
                                 mHighlightViews.get(j).setHidden(true);
                             }
                             centerBasedOnHighlightView(hv);
-                            ((CropImage) getContext()).mWaitingToPick = false;
+                            ((CropImage) mContext).mWaitingToPick = false;
                             return true;
                         }
                     }
@@ -734,11 +736,11 @@ class CropImageView extends ImageViewTouchBase {
     private void ensureVisible(HighlightView hv) {
         Rect r = hv.mDrawRect;
 
-        int panDeltaX1 = Math.max(0, getLeft() - r.left);
-        int panDeltaX2 = Math.min(0, getRight() - r.right);
+        int panDeltaX1 = Math.max(0, mLeft - r.left);
+        int panDeltaX2 = Math.min(0, mRight - r.right);
 
-        int panDeltaY1 = Math.max(0, getTop() - r.top);
-        int panDeltaY2 = Math.min(0, getBottom() - r.bottom);
+        int panDeltaY1 = Math.max(0, mTop - r.top);
+        int panDeltaY2 = Math.min(0, mBottom - r.bottom);
 
         int panDeltaX = panDeltaX1 != 0 ? panDeltaX1 : panDeltaX2;
         int panDeltaY = panDeltaY1 != 0 ? panDeltaY1 : panDeltaY2;

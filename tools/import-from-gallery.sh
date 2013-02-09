@@ -1,20 +1,25 @@
 #!/bin/sh
 
+set -e
+set -u
+
 IMPORT_LIST="${1}"
 GALLERY_SRC="${2}"
 
-
-if [ $# -ne 2 ]; then
-    echo "Usage: ${0} import-list gallery-source-root"
+test $# -eq 2 || {
+    echo "Usage: ${0} <import-list> <gallery-source-root>"
     exit 1
-fi
+}
 
-
-if [ ! -f "${IMPORT_LIST}" ]; then
+test -f "${IMPORT_LIST}" || {
     echo "Unable to read import list"
     exit 1
-fi
+}
 
+test -d "${GALLERY_SRC}" || {
+    echo "${GALLERY_SRC}: no such directory."
+    exit 1
+}
 
 cat ${IMPORT_LIST} | while read line; do
     if [ ! -f "${GALLERY_SRC}/${line}" ]; then

@@ -432,6 +432,7 @@ public class Util {
     // Returns Options that set the puregeable flag for Bitmap decode.
     public static BitmapFactory.Options createNativeAllocOptions() {
         BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inNativeAlloc = true;
         return options;
     }
 }
