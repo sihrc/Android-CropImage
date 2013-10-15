@@ -19,7 +19,7 @@ Intent-based API
 ================
 
 The `CropImage` activity is controlled by an Intent-based API. Please use the
-wrapper class [CropImageIntentBuilder](https://github.com/lvillani/android-cropimage/blob/develop/CropImage/src/main/java/com/android/camera/CropImageIntentBuilder.java)
+wrapper class [CropImageIntentBuilder](CropImage/src/main/java/com/android/camera/CropImageIntentBuilder.java)
 for a type-safe interface.
 
 
