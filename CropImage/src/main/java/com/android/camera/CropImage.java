@@ -495,7 +495,7 @@ public class CropImage extends MonitoredActivity {
 
         // Scale the image down for faster face detection.
         private Bitmap prepareBitmap() {
-            if (mBitmap == null) {
+            if (mBitmap == null ||  mBitmap.isRecycled()) {
                 return null;
             }
 
