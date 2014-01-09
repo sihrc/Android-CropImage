@@ -45,12 +45,14 @@ public class CropImageIntentBuilder {
     private static final String EXTRA_SCALE = "scale";
     private static final String EXTRA_SCALE_UP_IF_NEEDED = "scaleUpIfNeeded";
     private static final String EXTRA_NO_FACE_DETECTION = "noFaceDetection";
+    private static final String EXTRA_CIRCLE_CROP = "circleCrop";
 
     private static final int DEFAULT_SCALE = 1;
 
     private boolean scale = true;
     private boolean scaleUpIfNeeded = true;
     private boolean doFaceDetection = true;
+    private boolean circleCrop = false;
     private Uri sourceImage;
     private Bitmap bitmap;
 
@@ -127,6 +129,7 @@ public class CropImageIntentBuilder {
         intent.putExtra(EXTRA_SCALE, this.scale);
         intent.putExtra(EXTRA_SCALE_UP_IF_NEEDED, this.scaleUpIfNeeded);
         intent.putExtra(EXTRA_NO_FACE_DETECTION, !this.doFaceDetection);
+        intent.putExtra(EXTRA_CIRCLE_CROP, this.circleCrop);
 
         if (this.bitmap != null) {
             intent.putExtra(EXTRA_BITMAP_DATA, this.bitmap);
@@ -206,6 +209,20 @@ public class CropImageIntentBuilder {
      */
     public CropImageIntentBuilder setSourceImage(final Uri sourceImage) {
         this.sourceImage = sourceImage;
+
+        return this;
+    }
+    
+    /**
+     * Whether to crop the image as circle 
+     * 
+     * @param circleCrop
+     *        Whether to crop the image as circle.
+     * @return This Builder object to allow for chaining of calls to set methods.
+     * @since 1.0.1
+     */
+    public CropImageIntentBuilder setCircleCrop(final boolean circleCrop) {
+        this.circleCrop = circleCrop;
 
         return this;
     }

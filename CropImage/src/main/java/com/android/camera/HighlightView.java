@@ -93,7 +93,7 @@ class HighlightView {
                                mDrawRect.top + (height / 2),
                                width / 2,
                                Path.Direction.CW);
-                mOutlinePaint.setColor(0xFFEF04D6);
+                mOutlinePaint.setColor(0xFF333EDE);
             } else {
                 path.addRect(new RectF(mDrawRect), Path.Direction.CW);
                 mOutlinePaint.setColor(0xFFFF8A00);
@@ -105,7 +105,7 @@ class HighlightView {
             canvas.restore();
             canvas.drawPath(path, mOutlinePaint);
 
-            if (mMode == ModifyMode.Grow) {
+//            if (mMode == ModifyMode.Grow) {
                 if (mCircle) {
                     int width  = mResizeDrawableDiagonal.getIntrinsicWidth();
                     int height = mResizeDrawableDiagonal.getIntrinsicHeight();
@@ -164,7 +164,7 @@ class HighlightView {
                                                     bottom + heightHeight);
                     mResizeDrawableHeight.draw(canvas);
                 }
-            }
+//            }
         }
     }
 

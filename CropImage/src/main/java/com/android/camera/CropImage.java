@@ -101,7 +101,7 @@ public class CropImage extends MonitoredActivity {
         Bundle extras = intent.getExtras();
 
         if (extras != null) {
-            if (extras.getString("circleCrop") != null) {
+            if (extras.getBoolean("circleCrop", false)) {
                 mCircleCrop = true;
                 mAspectX = 1;
                 mAspectY = 1;
