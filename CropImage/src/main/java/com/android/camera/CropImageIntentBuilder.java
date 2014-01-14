@@ -46,6 +46,7 @@ public class CropImageIntentBuilder {
     private static final String EXTRA_SCALE_UP_IF_NEEDED = "scaleUpIfNeeded";
     private static final String EXTRA_NO_FACE_DETECTION = "noFaceDetection";
     private static final String EXTRA_CIRCLE_CROP = "circleCrop";
+    private static final String EXTRA_OUTPUT_FORMAT = "outputFormat";
 
     private static final int DEFAULT_SCALE = 1;
 
@@ -53,6 +54,7 @@ public class CropImageIntentBuilder {
     private boolean scaleUpIfNeeded = true;
     private boolean doFaceDetection = true;
     private boolean circleCrop = false;
+    private String outputFormat = null;
     private Uri sourceImage;
     private Bitmap bitmap;
 
@@ -130,7 +132,8 @@ public class CropImageIntentBuilder {
         intent.putExtra(EXTRA_SCALE_UP_IF_NEEDED, this.scaleUpIfNeeded);
         intent.putExtra(EXTRA_NO_FACE_DETECTION, !this.doFaceDetection);
         intent.putExtra(EXTRA_CIRCLE_CROP, this.circleCrop);
-
+        intent.putExtra(EXTRA_OUTPUT_FORMAT, this.outputFormat);
+        
         if (this.bitmap != null) {
             intent.putExtra(EXTRA_BITMAP_DATA, this.bitmap);
         }
@@ -223,6 +226,20 @@ public class CropImageIntentBuilder {
      */
     public CropImageIntentBuilder setCircleCrop(final boolean circleCrop) {
         this.circleCrop = circleCrop;
+
+        return this;
+    }
+    
+    /**
+     * Set output format of the image to crop. If not set, JPEG will be use. 
+     * 
+     * @param outputFormat
+     *        Output format of the image to crop, such as JPEG, PNG or WEBP.
+     * @return This Builder object to allow for chaining of calls to set methods.
+     * @since 1.0.1
+     */
+    public CropImageIntentBuilder setOutputFormat(final String outputFormat) {
+        this.outputFormat = outputFormat;
 
         return this;
     }
