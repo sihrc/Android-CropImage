@@ -27,13 +27,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
+import android.graphics.PorterDuff.Mode;
 import android.media.FaceDetector;
 import android.net.Uri;
 import android.os.Bundle;
@@ -105,6 +109,7 @@ public class CropImage extends MonitoredActivity {
                 mCircleCrop = true;
                 mAspectX = 1;
                 mAspectY = 1;
+                mOutputFormat = Bitmap.CompressFormat.PNG;
             }
             mSaveUri = (Uri) extras.getParcelable(MediaStore.EXTRA_OUTPUT);
             if (mSaveUri != null) {
@@ -261,26 +266,34 @@ public class CropImage extends MonitoredActivity {
                     : Bitmap.Config.RGB_565);
 
             Canvas canvas = new Canvas(croppedImage);
-            Rect dstRect = new Rect(0, 0, width, height);
-            canvas.drawBitmap(mBitmap, r, dstRect, null);
+            
+            if (mCircleCrop) {                         
+                final int color = 0xffff0000;
+                final Paint paint = new Paint();
+        		final Rect rect = new Rect(0, 0, croppedImage.getWidth(), croppedImage.getHeight());
+        		final RectF rectF = new RectF(rect);
 
+        		paint.setAntiAlias(true);
+        		paint.setDither(true);
+        		paint.setFilterBitmap(true);
+        		canvas.drawARGB(0, 0, 0, 0);
+        		paint.setColor(color);
+        		canvas.drawOval(rectF, paint);
+
+        		paint.setColor(Color.BLUE);
+        		paint.setStyle(Paint.Style.STROKE);
+        		paint.setStrokeWidth((float) 4);
+        		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+        		canvas.drawBitmap(mBitmap, r, rect, paint);
+            }
+            else {
+            	Rect dstRect = new Rect(0, 0, width, height);
+             	canvas.drawBitmap(mBitmap, r, dstRect, null);
+            }            
+            
             // Release bitmap memory as soon as possible
             mImageView.clear();
             mBitmap.recycle();
-
-            if (mCircleCrop) {
-                // OK, so what's all this about?
-                // Bitmaps are inherently rectangular but we want to return
-                // something that's basically a circle.  So we fill in the
-                // area around the circle with alpha.  Note the all important
-                // PortDuff.Mode.CLEAR.
-                Canvas c = new Canvas(croppedImage);
-                Path p = new Path();
-                p.addCircle(width / 2F, height / 2F, width / 2F,
-                        Path.Direction.CW);
-                c.clipPath(p, Region.Op.DIFFERENCE);
-                c.drawColor(0x00000000, PorterDuff.Mode.CLEAR);
-            }
 
             // If the required dimension is specified, scale the image.
             if (mOutputX != 0 && mOutputY != 0 && mScale) {
@@ -323,7 +336,7 @@ public class CropImage extends MonitoredActivity {
             try {
                 outputStream = mContentResolver.openOutputStream(mSaveUri);
                 if (outputStream != null) {
-                    croppedImage.compress(mOutputFormat, 75, outputStream);
+                    croppedImage.compress(mOutputFormat, 100, outputStream);
                 }
             } catch (IOException ex) {
                 // TODO: report error to caller
