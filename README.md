@@ -38,3 +38,7 @@ Project Information
 
  * Home Page: https://github.com/lvillani/android-cropimage
  * Bug tracking: https://github.com/lvillani/android-cropimage/issues
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lvillani/android-cropimage/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
