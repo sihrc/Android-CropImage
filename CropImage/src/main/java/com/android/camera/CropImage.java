@@ -266,31 +266,31 @@ public class CropImage extends MonitoredActivity {
                     : Bitmap.Config.RGB_565);
 
             Canvas canvas = new Canvas(croppedImage);
-            
-            if (mCircleCrop) {                         
+
+            if (mCircleCrop) {
                 final int color = 0xffff0000;
                 final Paint paint = new Paint();
-        		final Rect rect = new Rect(0, 0, croppedImage.getWidth(), croppedImage.getHeight());
-        		final RectF rectF = new RectF(rect);
+                final Rect rect = new Rect(0, 0, croppedImage.getWidth(), croppedImage.getHeight());
+                final RectF rectF = new RectF(rect);
 
-        		paint.setAntiAlias(true);
-        		paint.setDither(true);
-        		paint.setFilterBitmap(true);
-        		canvas.drawARGB(0, 0, 0, 0);
-        		paint.setColor(color);
-        		canvas.drawOval(rectF, paint);
+                paint.setAntiAlias(true);
+                paint.setDither(true);
+                paint.setFilterBitmap(true);
+                canvas.drawARGB(0, 0, 0, 0);
+                paint.setColor(color);
+                canvas.drawOval(rectF, paint);
 
-        		paint.setColor(Color.BLUE);
-        		paint.setStyle(Paint.Style.STROKE);
-        		paint.setStrokeWidth((float) 4);
-        		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-        		canvas.drawBitmap(mBitmap, r, rect, paint);
+                paint.setColor(Color.BLUE);
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setStrokeWidth((float) 4);
+                paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+                canvas.drawBitmap(mBitmap, r, rect, paint);
             }
             else {
             	Rect dstRect = new Rect(0, 0, width, height);
              	canvas.drawBitmap(mBitmap, r, dstRect, null);
-            }            
-            
+            }
+
             // Release bitmap memory as soon as possible
             mImageView.clear();
             mBitmap.recycle();
