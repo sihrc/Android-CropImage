@@ -25,13 +25,13 @@ import android.provider.MediaStore;
 /**
  * By default the following features are enabled, unless you override them by calling setters in the
  * builder:
- * 
+ *
  * <ul>
  * <li>Scale;</li>
  * <li>Scale up (if needed);</li>
  * <li>Face detection;</li>
  * </ul>
- * 
+ *
  * @since 1.0.1
  */
 // TODO: Circle Crop
@@ -45,12 +45,16 @@ public class CropImageIntentBuilder {
     private static final String EXTRA_SCALE = "scale";
     private static final String EXTRA_SCALE_UP_IF_NEEDED = "scaleUpIfNeeded";
     private static final String EXTRA_NO_FACE_DETECTION = "noFaceDetection";
+    private static final String EXTRA_CIRCLE_CROP = "circleCrop";
+    private static final String EXTRA_OUTPUT_FORMAT = "outputFormat";
 
     private static final int DEFAULT_SCALE = 1;
 
     private boolean scale = true;
     private boolean scaleUpIfNeeded = true;
     private boolean doFaceDetection = true;
+    private boolean circleCrop = false;
+    private String outputFormat = null;
     private Uri sourceImage;
     private Bitmap bitmap;
 
@@ -62,7 +66,7 @@ public class CropImageIntentBuilder {
 
     /**
      * Constructor.
-     * 
+     *
      * @param outputX
      *        Output vertical size in pixels.
      * @param outputY
@@ -77,7 +81,7 @@ public class CropImageIntentBuilder {
 
     /**
      * Constructor.
-     * 
+     *
      * @param aspectX
      *        Horizontal aspect ratio.
      * @param aspectY
@@ -101,7 +105,7 @@ public class CropImageIntentBuilder {
 
     /**
      * Builds the Intent.
-     * 
+     *
      * @param context
      *        The application context.
      * @return The newly created intent.
@@ -127,6 +131,8 @@ public class CropImageIntentBuilder {
         intent.putExtra(EXTRA_SCALE, this.scale);
         intent.putExtra(EXTRA_SCALE_UP_IF_NEEDED, this.scaleUpIfNeeded);
         intent.putExtra(EXTRA_NO_FACE_DETECTION, !this.doFaceDetection);
+        intent.putExtra(EXTRA_CIRCLE_CROP, this.circleCrop);
+        intent.putExtra(EXTRA_OUTPUT_FORMAT, this.outputFormat);
 
         if (this.bitmap != null) {
             intent.putExtra(EXTRA_BITMAP_DATA, this.bitmap);
@@ -141,7 +147,7 @@ public class CropImageIntentBuilder {
 
     /**
      * Scales down the picture.
-     * 
+     *
      * @param scale
      *        Whether to scale down the image.
      * @return This Builder object to allow for chaining of calls to set methods.
@@ -155,7 +161,7 @@ public class CropImageIntentBuilder {
 
     /**
      * Whether to scale up the image if the cropped region is smaller than the output size.
-     * 
+     *
      * @param scaleUpIfNeeded
      *        Whether to scale up the image.
      * @return This Builder object to allow for chaining of calls to set methods.
@@ -169,7 +175,7 @@ public class CropImageIntentBuilder {
 
     /**
      * Performs face detection before allowing users to crop the image.
-     * 
+     *
      * @param doFaceDetection
      *        Whether to perform face detection.
      * @return This Builder object to allow for chaining of calls to set methods.
@@ -184,7 +190,7 @@ public class CropImageIntentBuilder {
     /**
      * Sets bitmap data to crop. Please note that this method overrides any source image set by
      * {@link #setSourceImage(Uri)}.
-     * 
+     *
      * @param bitmap
      *        The {@link Bitmap} to crop.
      * @return This Builder object to allow for chaining of calls to set methods.
@@ -198,7 +204,7 @@ public class CropImageIntentBuilder {
 
     /**
      * Sets the Uri of the image to crop. It must be accessible to the calling application/activity.
-     * 
+     *
      * @param sourceImage
      *        Uri of the image to crop.
      * @return This Builder object to allow for chaining of calls to set methods.
@@ -206,6 +212,34 @@ public class CropImageIntentBuilder {
      */
     public CropImageIntentBuilder setSourceImage(final Uri sourceImage) {
         this.sourceImage = sourceImage;
+
+        return this;
+    }
+
+    /**
+     * Whether to crop the image as circle
+     *
+     * @param circleCrop
+     *        Whether to crop the image as circle.
+     * @return This Builder object to allow for chaining of calls to set methods.
+     * @since 1.0.1
+     */
+    public CropImageIntentBuilder setCircleCrop(final boolean circleCrop) {
+        this.circleCrop = circleCrop;
+
+        return this;
+    }
+
+    /**
+     * Set output format of the image to crop. If not set, JPEG will be used.
+     *
+     * @param outputFormat
+     *        Output format of the image to crop, such as JPEG, PNG or WEBP.
+     * @return This Builder object to allow for chaining of calls to set methods.
+     * @since 1.0.1
+     */
+    public CropImageIntentBuilder setOutputFormat(final String outputFormat) {
+        this.outputFormat = outputFormat;
 
         return this;
     }
