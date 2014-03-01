@@ -35,3 +35,16 @@ configurations {
         extendsFrom configurations.default
     }
 }
+
+repositories {
+    flatDir {
+        name "fileRepo"
+        dirs "../repo"
+    }
+}
+
+uploadArchives {
+    repositories {
+        add project.repositories.fileRepo
+    }
+}
