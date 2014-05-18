@@ -1,7 +1,7 @@
 Android CropImage
 =================
 
-![Gittip](http://img.shields.io/gittip/lvillani.svg)
+[![Gittip](http://img.shields.io/gittip/lvillani.svg)](https://www.gittip.com/lvillani/)
 
 The `CropImage` activity extracted from `Gallery.apk` in AOSP 4.0. Compatible
 with Android API Level 15 onwards.
