@@ -1,7 +1,7 @@
 Android CropImage
 =================
 
-[![Gittip](http://img.shields.io/gittip/lvillani.svg)](https://www.gittip.com/lvillani/)
+<script id='fbdakd2'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=lvillani&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbdakd2');</script>
 
 The `CropImage` activity extracted from `Gallery.apk` in AOSP 4.0. Compatible
 with Android API Level 15 onwards.
