@@ -1,3 +1,4 @@
+*.iml
 .DS_Store
 .classpath
 .project
@@ -5,8 +6,11 @@ Thumbs.db
 desktop.ini
 local.properties
 
+.gradle/
+.idea/
 .pc/
 .settings/
 bin/
+build/
 gen/
 target/
